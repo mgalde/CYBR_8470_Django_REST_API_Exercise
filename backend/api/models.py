@@ -7,6 +7,7 @@ from django.contrib.auth.models import User, Group
 
 from django.contrib import admin
 import base64
+
 class Events(APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.JSONParser,parsers.FormParser)
@@ -43,7 +44,15 @@ class Events(APIView):
         newEvent.save()
         print 'New Event Logged from: ' + requestor
         return Response({'success': True}, status=status.HTTP_200_OK)
+        
+class Event(models.Model):
+    eventtype = models.CharField(max_length=1000, blank=False)
+    timestamp = models.DateTimeField()
+    userid = models.CharField(max_length=1000, blank=True)
+    requestor = models.GenericIPAddressField(blank=False)
 
+    def __str__(self):
+        return str(self.eventtype)
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('eventtype', 'timestamp')
