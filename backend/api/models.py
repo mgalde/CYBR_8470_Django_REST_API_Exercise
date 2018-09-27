@@ -29,14 +29,3 @@ class ApiKey(models.Model):
 
 class ApiKeyAdmin(admin.ModelAdmin):
 	list_display = ('owner','key')
-
-class DogList(APIView):
-	"""
-	List all dogs, or create a new dog.
-	"""
-	def get(self, request, format=None):
-
-		return Response(serializer.data)
-
-	def post(self, request, format=None):
-		return Response(serializer.data, status=status.HTTP_201_CREATED)
