@@ -216,9 +216,10 @@ class Dogs(APIView):
 		return Response({'success': True}, status=status.HTTP_200_OK)
 
 	def delete(self, request, *args, **kwargs):
-		print "I want to delete stuff"
+		print 'I want to delete stuff'
 		print str(request.data)
-		
+		print 'End Check'
+
 
 class ActivateIFTTT(APIView):
 	permission_classes = (AllowAny,)
