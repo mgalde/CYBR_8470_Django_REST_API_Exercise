@@ -33,6 +33,19 @@ class Dog(models.Model):
 	def __str__(self):
 		return str(self.eventtype)
 
+class User(models.Model):
+	username = models.CharField(max_length=1000, blank=False)
+	age = models.DateTimeField()
+	password = models.CharField(max_length=1000, blank=False)
+	email = models.CharField(max_length=1000, blank=False)
+	gender = models.CharField(max_length=1000, blank=False)
+	educationlevel = models.CharField(max_length=1000, blank=False)
+	city = models.CharField(max_length=1000, blank=False)
+	state = models.CharField(max_length=1000, blank=False)
+
+	def __str__(self):
+		return str(self.eventtype)
+
 class EventAdmin(admin.ModelAdmin):
 	list_display = ('eventtype', 'timestamp')
 

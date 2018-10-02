@@ -169,9 +169,9 @@ class Dogs(APIView):
 	renderer_classes = (renderers.JSONRenderer, )
 
 	def get(self, request, format=None):
-		events = Dog.objects.all()
-		json_data = serializers.serialize('json', events)
-		content = {'events': json_data}
+		doggy = Dog.objects.all()
+		json_data = serializers.serialize('json', doggy)
+		content = {'doggy': json_data}
 		return HttpResponse(json_data, content_type='json')
 
 	def post(self, request, *args, **kwargs):
