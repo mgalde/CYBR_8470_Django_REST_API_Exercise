@@ -31,7 +31,7 @@ class Dog(models.Model):
 	requestor = models.GenericIPAddressField(blank=False)
 
 	def __str__(self):
-		return str(self.eventtype)
+		return str(self.dogname)
 
 class User(models.Model):
 	username = models.CharField(max_length=1000, blank=False)
