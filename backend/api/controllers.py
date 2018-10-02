@@ -179,7 +179,7 @@ class Dogs(APIView):
 		print str(request.data)
 
 		dogname = request.data.get('dogname')
-		dogage = request.data.get('dogbreed')
+		dogage = request.data.get('dogage')
 		dogbreed = request.data.get('dogbreed')
 		doggender = request.data.get('doggender')
 		dogcolor = request.data.get('dogcolor')
