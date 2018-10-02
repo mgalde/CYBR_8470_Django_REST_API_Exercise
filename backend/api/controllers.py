@@ -78,7 +78,7 @@ class Register(APIView):
 			return Response({'email': 'Email is taken.', 'status': 'error'})
 
 		#especially before you pass them in here
-		newuser = User.objects.get(email=email, username=username, password=password)
+		newuser = User.objects.create_user(email=email, username=username, password=password)
 		newprofile = Profile(user=newuser, gender=gender, age=age, educationlevel=educationlevel, city=city, state=state)
 		newprofile.save()
 
