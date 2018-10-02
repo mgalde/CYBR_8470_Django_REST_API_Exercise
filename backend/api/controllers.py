@@ -167,6 +167,11 @@ class Dogs(APIView):
 		content = {'events': json_data}
 		return HttpResponse(json_data, content_type='json')
 
+	def delete(self, request, pk, format=None):
+        snippet = Event.objects.all()
+        snippet.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 	def post(self, request, *args, **kwargs):
 		print 'REQUEST DATA'
 		print str(request.data)
