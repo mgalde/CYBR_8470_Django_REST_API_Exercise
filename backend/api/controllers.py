@@ -192,7 +192,7 @@ class Dogs(APIView):
 
 		newDog = Dog(
 			dogname=dogname,
-			dogage=dogage,
+			dogage=datetime.datetime.fromtimestamp(dogage/1000, pytz.utc),
 			dogbreed=dogbreed,
 			doggender=doggender,
 			dogcolor=dogcolor,
