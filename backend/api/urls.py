@@ -11,11 +11,11 @@ from django.views.decorators.csrf import csrf_exempt
 router = routers.DefaultRouter(trailing_slash=False)
 
 urlpatterns = [
-    url(r'^session', csrf_exempt(controllers.Session.as_view())),
-    url(r'^register', csrf_exempt(controllers.Register.as_view())),
-    url(r'^events', csrf_exempt(controllers.Events.as_view())),
-    url(r'^dogs', csrf_exempt(controllers.Events.as_view())),
-    url(r'^activateifttt', csrf_exempt(controllers.ActivateIFTTT.as_view())),
-    url(r'^users', ListCreateAPIView.as_view(queryset=User.objects.all(), serializer_class=UserSerializer), name='user-list')
-    url(r'^', include(router.urls)),
+	url(r'^session', csrf_exempt(controllers.Session.as_view())),
+	url(r'^register', csrf_exempt(controllers.Register.as_view())),
+	url(r'^events', csrf_exempt(controllers.Events.as_view())),
+	url(r'^dogs', csrf_exempt(controllers.Events.as_view())),
+	url(r'^activateifttt', csrf_exempt(controllers.ActivateIFTTT.as_view())),
+	url(r'^users', ListCreateAPIView.as_view(queryset=User.objects.all(), serializer_class=UserSerializer), name='user-list')
+	url(r'^', include(router.urls)),
 ]
