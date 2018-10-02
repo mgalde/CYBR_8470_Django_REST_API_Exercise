@@ -86,7 +86,7 @@ class Register(APIView):
 
 	def get(self, request, format=None):
 		username = User.objects.all()
-		json_data = serializers.serialize('json', events)
+		json_data = serializers.serialize('json', register)
 		content = {'register': json_data}
 		return HttpResponse(json_data, content_type='json')
 
