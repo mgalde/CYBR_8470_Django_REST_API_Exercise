@@ -217,7 +217,7 @@ class Dogs(APIView):
 
 	def delete(self, request):
 		print 'I want to delete stuff'
-		print str(request.data)
+		#print str(request.data)
 		print 'End Check'
 
 
