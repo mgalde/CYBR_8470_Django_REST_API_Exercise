@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^events', csrf_exempt(controllers.Events.as_view())),
     url(r'^dogs', csrf_exempt(controllers.Events.as_view())),
     url(r'^activateifttt', csrf_exempt(controllers.ActivateIFTTT.as_view())),
+    url(r'^/users/', ListCreateAPIView.as_view(queryset=User.objects.all(), serializer_class=UserSerializer), name='user-list')
     url(r'^', include(router.urls)),
 ]
