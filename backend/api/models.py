@@ -59,7 +59,7 @@ class Profile(models.Model):
 	def __str__(self):
 		return str(self.eventtype)
 
-class CreateUser(models.Model):
+class Create_User(models.Model):
 	username = models.CharField(max_length=1000, blank=False)
 	age = models.DateTimeField()
 	password = models.CharField(max_length=1000, blank=False)
