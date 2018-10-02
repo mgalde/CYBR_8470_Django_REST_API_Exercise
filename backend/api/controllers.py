@@ -84,6 +84,12 @@ class Register(APIView):
 
 		return Response({'status': 'success', 'userid': newuser.id, 'profile': newprofile.id})
 
+	def get(self, request, format=None):
+		username = User.objects.all()
+		json_data = serializers.serialize('json', events)
+		content = {'register': json_data}
+		return HttpResponse(json_data, content_type='json')
+
 class Session(APIView):
 	permission_classes = (AllowAny,)
 	def form_response(self, isauthenticated, userid, username, error=""):
