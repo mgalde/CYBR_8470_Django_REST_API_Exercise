@@ -171,12 +171,26 @@ class Dogs(APIView):
 		print 'REQUEST DATA'
 		print str(request.data)
 
+		dogname = request.data.get('dogname')
+		dogage = int(request.data.get('dogage'))
+		dogbreed = request.data.get('dogbreed')
+		doggender = request.data.get('doggender')
+		dogcolor = request.data.get('dogcolor')
+		dogfood = request.data.get('dogfood')
+		dogtoy = request.data.get('dogtoy')
 		eventtype = request.data.get('eventtype')
 		timestamp = int(request.data.get('timestamp'))
 		userid = request.data.get('userid')
 		requestor = request.META['REMOTE_ADDR']
 
-		newEvent = Event(
+		newDog = Event(
+			dogname=dogname,
+			dogage=dogage,
+			dogbreed=dogbreed,
+			doggender=doggender,
+			dogcolor=dogcolor,
+			dogfood=dogfood,
+			dogtoy=dogtoy,
 			eventtype=eventtype,
 			timestamp=datetime.datetime.fromtimestamp(timestamp/1000, pytz.utc),
 			userid=userid,
@@ -184,12 +198,12 @@ class Dogs(APIView):
 		)
 
 		try:
-			newEvent.clean_fields()
+			newDog.clean_fields()
 		except ValidationError as e:
 			print e
 			return Response({'success':False, 'error':e}, status=status.HTTP_400_BAD_REQUEST)
 
-		newEvent.save()
+		newDog.save()
 		print 'New Event Logged from: ' + requestor
 		return Response({'success': True}, status=status.HTTP_200_OK)
 
