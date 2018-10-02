@@ -206,9 +206,9 @@ class Dogs(APIView):
 
 		try:
 			newDog.clean_fields()
-		except ValidationError as e:
-			print e
-			return Response({'success':False, 'error':e}, status=status.HTTP_400_BAD_REQUEST)
+		except ValidationError as f:
+			print f
+			return Response({'success':False, 'error':f}, status=status.HTTP_400_BAD_REQUEST)
 
 		newDog.save()
 		print 'New Event Logged from: ' + requestor

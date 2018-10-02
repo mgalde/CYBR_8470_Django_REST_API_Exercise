@@ -19,7 +19,7 @@ class Event(models.Model):
 
 class Dog(models.Model):
 	dogname = models.CharField(max_length=1000, blank=False)
-	dogage = models.DateTimeField()
+	dogage = models.CharField(max_length=1000, blank=False)
 	dogbreed = models.CharField(max_length=1000, blank=False)
 	doggender = models.CharField(max_length=1000, blank=False)
 	dogcolor = models.CharField(max_length=1000, blank=False)
