@@ -179,7 +179,7 @@ class Dogs(APIView):
 		print str(request.data)
 
 		dogname = request.data.get('dogname')
-		dogage = int(request.data.get('dogage'))
+		dogage = request.data.get('dogbreed')
 		dogbreed = request.data.get('dogbreed')
 		doggender = request.data.get('doggender')
 		dogcolor = request.data.get('dogcolor')
@@ -192,7 +192,7 @@ class Dogs(APIView):
 
 		newDog = Dog(
 			dogname=dogname,
-			dogage=datetime.datetime.fromtimestamp(dogage/1000, pytz.utc),
+			dogage=dogage,
 			dogbreed=dogbreed,
 			doggender=doggender,
 			dogcolor=dogcolor,
