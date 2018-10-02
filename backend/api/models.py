@@ -17,6 +17,22 @@ class Event(models.Model):
 	def __str__(self):
 		return str(self.eventtype)
 
+class Dog(models.Model):
+	dogname = models.CharField(max_length=1000, blank=False)
+	dogage = models.DateTimeField()
+	dogbreed = models.CharField(max_length=1000, blank=False)
+	doggender = models.CharField(max_length=1000, blank=False)
+	dogcolor = models.CharField(max_length=1000, blank=False)
+	dogfood = models.CharField(max_length=1000, blank=False)
+	dogtoy = models.CharField(max_length=1000, blank=False)
+	eventtype = models.CharField(max_length=1000, blank=False)
+	timestamp = models.DateTimeField()
+	userid = models.CharField(max_length=1000, blank=True)
+	requestor = models.GenericIPAddressField(blank=False)
+
+	def __str__(self):
+		return str(self.eventtype)
+
 class EventAdmin(admin.ModelAdmin):
 	list_display = ('eventtype', 'timestamp')
 
