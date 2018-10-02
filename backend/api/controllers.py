@@ -162,7 +162,7 @@ class Dogs(APIView):
 	renderer_classes = (renderers.JSONRenderer, )
 
 	def get(self, request, format=None):
-		events = Event.objects.all()
+		events = Dog.objects.all()
 		json_data = serializers.serialize('json', events)
 		content = {'events': json_data}
 		return HttpResponse(json_data, content_type='json')
@@ -183,7 +183,7 @@ class Dogs(APIView):
 		userid = request.data.get('userid')
 		requestor = request.META['REMOTE_ADDR']
 
-		newDog = Event(
+		newDog = Dog(
 			dogname=dogname,
 			dogage=dogage,
 			dogbreed=dogbreed,
