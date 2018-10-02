@@ -215,6 +215,11 @@ class Dogs(APIView):
 		print 'New Event Logged from: ' + requestor
 		return Response({'success': True}, status=status.HTTP_200_OK)
 
+	def delete(self, request, *args, **kwargs):
+		print "I want to delete stuff"
+		print str(request.data)
+		
+
 class ActivateIFTTT(APIView):
 	permission_classes = (AllowAny,)
 	parser_classes = (parsers.JSONParser,parsers.FormParser)
