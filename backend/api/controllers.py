@@ -219,8 +219,6 @@ class Dogs(APIView):
 		# Logout
 		print 'Here we go'
         print str(request.data)
-		return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 class ActivateIFTTT(APIView):
 	permission_classes = (AllowAny,)
