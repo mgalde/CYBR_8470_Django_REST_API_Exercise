@@ -218,7 +218,7 @@ class Dogs(APIView):
 	def delete(self, request, *args, **kwargs):
 		# Logout
 		print 'Here we go'
-        print str(request.data)
+		print str(request.data)
 
 class ActivateIFTTT(APIView):
 	permission_classes = (AllowAny,)
