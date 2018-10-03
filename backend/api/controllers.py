@@ -215,10 +215,11 @@ class Dogs(APIView):
 		print 'New Event Logged from: ' + requestor
 		return Response({'success': True}, status=status.HTTP_200_OK)
 
-	def purge(self, request):
-		print 'I want to delete stuff'
-		#print str(request.data)
-		print 'End Check'
+	def delete(self, request, *args, **kwargs):
+		# Logout
+		print 'Here we go'
+        print str(request.data)
+		return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ActivateIFTTT(APIView):
