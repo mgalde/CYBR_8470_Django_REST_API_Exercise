@@ -24,11 +24,11 @@ BREEDDEFINE = (
 	('Large', 'Large'),)
 
 BREEDRATE = (
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5),)
+	(1, 1),
+	(2, 2),
+	(3, 3),
+	(4, 4),
+	(5, 5),)
 
 class Dog(models.Model):
 	dogname = models.CharField(max_length=1000, blank=False)
