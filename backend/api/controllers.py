@@ -221,7 +221,7 @@ class Breeds(APIView):
 	renderer_classes = (renderers.JSONRenderer, )
 
 	def get(self, request, format=None):
-		breed = Dog.objects.all()
+		breed = Breed.objects.all()
 		json_data = serializers.serialize('json', breed)
 		content = {'breed': json_data}
 		return HttpResponse(json_data, content_type='json')
@@ -249,12 +249,12 @@ class Breeds(APIView):
 		)
 
 		try:
-			newDog.clean_fields()
+			newBreed.clean_fields()
 		except ValidationError as f:
 			print f
 			return Response({'success':False, 'error':f}, status=status.HTTP_400_BAD_REQUEST)
 
-		newDog.save()
+		newBreed.save()
 		print 'New Event Logged from: ' + requestor
 		return Response({'success': True}, status=status.HTTP_200_OK)
 
