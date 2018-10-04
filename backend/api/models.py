@@ -43,7 +43,7 @@ class Breed(models.Model):
 	requestor = models.GenericIPAddressField(blank=False)
 
 	def __str__(self):
-		return str(self.dogname)
+		return str(self.breedname)
 
 class User(models.Model):
 	username = models.CharField(max_length=1000, blank=False)
