@@ -46,8 +46,8 @@ class Breed(models.Model):
 
 class Dog(models.Model):
 	dogname = models.CharField(max_length=1000, blank=False)
-	dogage = models.IntegerField(max_length=5, blank=False)
-	dogbreed = models.ForeignKey(Breed, on_delete=models.CASCADE)
+	dogage = models.CharField(max_length=1000, blank=False)
+	dogbreed = models.CharField(max_length=1000, blank=False)
 	doggender = models.CharField(max_length=1000, blank=False)
 	dogcolor = models.CharField(max_length=1000, blank=False)
 	dogfood = models.CharField(max_length=1000, blank=False)
