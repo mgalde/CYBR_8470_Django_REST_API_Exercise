@@ -33,6 +33,18 @@ class Dog(models.Model):
 	def __str__(self):
 		return str(self.dogname)
 
+class Breed(models.Model):
+	breedname = models.CharField(max_length=1000, blank=False)
+	breedsize = models.CharField(max_length=1000, blank=False)
+	friendliness = models.CharField(max_length=1000, blank=False)
+	trainability = models.CharField(max_length=1000, blank=False)
+	sheddingamount = models.CharField(max_length=1000, blank=False)
+	exerciseneeds = models.CharField(max_length=1000, blank=False)
+	requestor = models.GenericIPAddressField(blank=False)
+
+	def __str__(self):
+		return str(self.dogname)
+
 class User(models.Model):
 	username = models.CharField(max_length=1000, blank=False)
 	age = models.DateTimeField()

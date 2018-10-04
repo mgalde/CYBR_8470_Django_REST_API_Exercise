@@ -215,12 +215,48 @@ class Dogs(APIView):
 		print 'New Event Logged from: ' + requestor
 		return Response({'success': True}, status=status.HTTP_200_OK)
 
-	def delete(self, request, *args, **kwargs):
-		print 'I want to delete stuff'
-		#print str(request.data)
-		print 'End Check'
+class Breeds(APIView):
+	permission_classes = (AllowAny,)
+	parser_classes = (parsers.JSONParser,parsers.FormParser)
+	renderer_classes = (renderers.JSONRenderer, )
 
+	def get(self, request, format=None):
+		breed = Dog.objects.all()
+		json_data = serializers.serialize('json', breed)
+		content = {'breed': json_data}
+		return HttpResponse(json_data, content_type='json')
 
+	def post(self, request, *args, **kwargs):
+		print 'REQUEST DATA'
+		print str(request.data)
+
+		breedname = request.data.get('breedname')
+		breedsize = request.data.get('breedsize')
+		friendliness = request.data.get('friendliness')
+		trainability = request.data.get('trainability')
+		sheddingamount = request.data.get('sheddingamount')
+		exerciseneeds = request.data.get('exerciseneeds')
+		requestor = request.META['REMOTE_ADDR']
+
+		newDog = Breed(
+			breedname=breedname,
+			breedsize=breedsize,
+			friendliness=friendliness,
+			trainability=trainability,
+			sheddingamount=sheddingamount,
+			exerciseneeds=exerciseneeds,
+			requestor=requestor
+		)
+
+		try:
+			newDog.clean_fields()
+		except ValidationError as f:
+			print f
+			return Response({'success':False, 'error':f}, status=status.HTTP_400_BAD_REQUEST)
+
+		newDog.save()
+		print 'New Event Logged from: ' + requestor
+		return Response({'success': True}, status=status.HTTP_200_OK)
 
 class ActivateIFTTT(APIView):
 	permission_classes = (AllowAny,)
