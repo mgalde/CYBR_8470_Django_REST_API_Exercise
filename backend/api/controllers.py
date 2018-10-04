@@ -253,8 +253,8 @@ class Breeds(APIView):
 		print 'Suscess'
 		return Response({'success': True}, status=status.HTTP_200_OK)
 
-	def delete(self, request, pk, format=None):
-		breed = self.get_object(pk)
+	def delete(self, request, *args, **kwargs):
+		breed = self.get_object()
 		print breed
 		print 'testing'
 
