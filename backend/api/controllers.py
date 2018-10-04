@@ -250,13 +250,13 @@ class Breeds(APIView):
 
 		newBreed.save()
 		print 'New Event Logged from: ' + requestor
-        print 'Suscess'
+		print 'Suscess'
 		return Response({'success': True}, status=status.HTTP_200_OK)
 
-    def delete(self, request, pk, format=None):
-        breed = self.get_object(pk)
-        print breed
-        print 'testing'
+	def delete(self, request, pk, format=None):
+		breed = self.get_object(pk)
+		print breed
+		print 'testing'
 
 class ActivateIFTTT(APIView):
 	permission_classes = (AllowAny,)
