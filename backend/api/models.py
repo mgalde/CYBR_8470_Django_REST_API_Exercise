@@ -30,19 +30,6 @@ BREEDRATE = (
 	(4, 4),
 	(5, 5),)
 
-class Dog(models.Model):
-	dogname = models.CharField(max_length=1000, blank=False)
-	dogage = models.IntegerField(max_length=5, blank=False)
-	dogbreed = models.ForeignKey(dogbreed, on_delete=models.CASCADE)
-	doggender = models.CharField(max_length=1000, blank=False)
-	dogcolor = models.CharField(max_length=1000, blank=False)
-	dogfood = models.CharField(max_length=1000, blank=False)
-	dogtoy = models.CharField(max_length=1000, blank=False)
-	requestor = models.GenericIPAddressField(blank=False)
-
-	def __str__(self):
-		return str(self.dogname)
-
 class Breed(models.Model):
 	breedname = models.CharField(max_length=1000, blank=False)
 	breedsize = models.IntegerField(max_length=5, choices=BREEDDEFINE)
@@ -54,6 +41,19 @@ class Breed(models.Model):
 
 	def __str__(self):
 		return str(self.breedname)
+
+class Dog(models.Model):
+	dogname = models.CharField(max_length=1000, blank=False)
+	dogage = models.IntegerField(max_length=5, blank=False)
+	dogbreed = models.ForeignKey(Breed, on_delete=models.CASCADE)
+	doggender = models.CharField(max_length=1000, blank=False)
+	dogcolor = models.CharField(max_length=1000, blank=False)
+	dogfood = models.CharField(max_length=1000, blank=False)
+	dogtoy = models.CharField(max_length=1000, blank=False)
+	requestor = models.GenericIPAddressField(blank=False)
+
+	def __str__(self):
+		return str(self.dogname)
 
 class User(models.Model):
 	username = models.CharField(max_length=1000, blank=False)
