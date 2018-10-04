@@ -238,7 +238,7 @@ class Breeds(APIView):
 		exerciseneeds = request.data.get('exerciseneeds')
 		requestor = request.META['REMOTE_ADDR']
 
-		newDog = Breed(
+		newBreed = Breed(
 			breedname=breedname,
 			breedsize=breedsize,
 			friendliness=friendliness,
