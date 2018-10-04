@@ -20,7 +20,7 @@ class Event(models.Model):
 BREEDDEFINE = (
 	('Tiny', 'Tiny'),
 	('Small', 'Small'),
-	('Med', 'Med'),
+	('Medium', 'Medium'),
 	('Large', 'Large'),
 )
 
