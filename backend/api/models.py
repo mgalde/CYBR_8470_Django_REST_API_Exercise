@@ -33,7 +33,7 @@ BREEDRATE = (
 class Dog(models.Model):
 	dogname = models.CharField(max_length=1000, blank=False)
 	dogage = models.IntegerField(max_length=5, blank=False)
-	dogbreed = models.ForeignKey(Breed, on_delete=models.CASCADE)
+	dogbreed = models.ForeignKey(dogbreed, on_delete=models.CASCADE)
 	doggender = models.CharField(max_length=1000, blank=False)
 	dogcolor = models.CharField(max_length=1000, blank=False)
 	dogfood = models.CharField(max_length=1000, blank=False)
