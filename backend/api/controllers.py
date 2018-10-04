@@ -186,9 +186,6 @@ class Dogs(APIView):
 		dogcolor = request.data.get('dogcolor')
 		dogfood = request.data.get('dogfood')
 		dogtoy = request.data.get('dogtoy')
-		eventtype = request.data.get('eventtype')
-		timestamp = int(request.data.get('timestamp'))
-		userid = request.data.get('userid')
 		requestor = request.META['REMOTE_ADDR']
 
 		newDog = Dog(
@@ -199,9 +196,6 @@ class Dogs(APIView):
 			dogcolor=dogcolor,
 			dogfood=dogfood,
 			dogtoy=dogtoy,
-			eventtype=eventtype,
-			timestamp=datetime.datetime.fromtimestamp(timestamp/1000, pytz.utc),
-			userid=userid,
 			requestor=requestor
 		)
 

@@ -25,9 +25,6 @@ class Dog(models.Model):
 	dogcolor = models.CharField(max_length=1000, blank=False)
 	dogfood = models.CharField(max_length=1000, blank=False)
 	dogtoy = models.CharField(max_length=1000, blank=False)
-	eventtype = models.CharField(max_length=1000, blank=False)
-	timestamp = models.DateTimeField()
-	userid = models.CharField(max_length=1000, blank=True)
 	requestor = models.GenericIPAddressField(blank=False)
 
 	def __str__(self):
@@ -56,7 +53,7 @@ class User(models.Model):
 	state = models.CharField(max_length=1000, blank=False)
 
 	def __str__(self):
-		return str(self.eventtype)
+		return str(self.username)
 
 class Profile(models.Model):
 	username = models.CharField(max_length=1000, blank=False)
@@ -69,7 +66,7 @@ class Profile(models.Model):
 	state = models.CharField(max_length=1000, blank=False)
 
 	def __str__(self):
-		return str(self.eventtype)
+		return str(self.username)
 
 class Create_User(models.Model):
 	username = models.CharField(max_length=1000, blank=False)
@@ -82,7 +79,7 @@ class Create_User(models.Model):
 	state = models.CharField(max_length=1000, blank=False)
 
 	def __str__(self):
-		return str(self.eventtype)
+		return str(self.username)
 
 class EventAdmin(admin.ModelAdmin):
 	list_display = ('eventtype', 'timestamp')
