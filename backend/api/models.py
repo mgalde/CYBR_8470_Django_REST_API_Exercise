@@ -21,18 +21,20 @@ BREEDDEFINE = (
 	('Tiny', 'Tiny'),
 	('Small', 'Small'),
 	('Medium', 'Medium'),
-	('Large', 'Large'),)
+	('Large', 'Large'),
+)
 
 BREEDRATE = (
 	(1, 1),
 	(2, 2),
 	(3, 3),
 	(4, 4),
-	(5, 5),)
+	(5, 5),
+)
 
 class Breed(models.Model):
 	breedname = models.CharField(max_length=1000, blank=False)
-	breedsize = models.IntegerField(max_length=5, choices=BREEDDEFINE)
+	breedsize = models.IntegerField(max_length=10, choices=BREEDDEFINE)
 	friendliness = models.IntegerField(choices=BREEDRATE)
 	trainability = models.IntegerField(choices=BREEDRATE)
 	sheddingamount = models.IntegerField(choices=BREEDRATE)
