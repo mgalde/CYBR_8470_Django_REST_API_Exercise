@@ -34,7 +34,7 @@ BREEDRATE = (
 
 class Breed(models.Model):
 	breedname = models.CharField(max_length=1000, blank=False)
-	breedsize = models.IntegerField(max_length=10, choices=BREEDDEFINE)
+	breedsize = models.IntegerField(choices=BREEDDEFINE)
 	friendliness = models.IntegerField(choices=BREEDRATE)
 	trainability = models.IntegerField(choices=BREEDRATE)
 	sheddingamount = models.IntegerField(choices=BREEDRATE)
