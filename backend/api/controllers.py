@@ -250,6 +250,7 @@ class Breeds(APIView):
 
 		newBreed.save()
 		print 'New Event Logged from: ' + requestor
+        print 'Suscess'
 		return Response({'success': True}, status=status.HTTP_200_OK)
 
 class ActivateIFTTT(APIView):
