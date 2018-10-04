@@ -253,6 +253,11 @@ class Breeds(APIView):
         print 'Suscess'
 		return Response({'success': True}, status=status.HTTP_200_OK)
 
+    def delete(self, request, pk, format=None):
+        breed = self.get_object(pk)
+        print breed
+        print 'testing'
+
 class ActivateIFTTT(APIView):
 	permission_classes = (AllowAny,)
 	parser_classes = (parsers.JSONParser,parsers.FormParser)
