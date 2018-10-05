@@ -17,33 +17,6 @@ class Event(models.Model):
 	def __str__(self):
 		return str(self.eventtype)
 
-BREEDDEFINE = (
-	('Tiny', 'Tiny'),
-	('Small', 'Small'),
-	('Medium', 'Medium'),
-	('Large', 'Large'),
-)
-
-BREEDRATE = (
-	(1, 1),
-	(2, 2),
-	(3, 3),
-	(4, 4),
-	(5, 5),
-)
-
-class Breed(models.Model):
-	breedname = models.CharField(max_length=1000, blank=False)
-	breedsize = models.CharField(max_length=1000, blank=False)
-	friendliness = models.IntegerField(choices=BREEDRATE)
-	trainability = models.IntegerField(choices=BREEDRATE)
-	sheddingamount = models.IntegerField(choices=BREEDRATE)
-	exerciseneeds = models.IntegerField(choices=BREEDRATE)
-	requestor = models.GenericIPAddressField(blank=False)
-
-	def __str__(self):
-		return str(self.breedname)
-
 class Dog(models.Model):
 	dogname = models.CharField(max_length=1000, blank=False)
 	dogage = models.CharField(max_length=1000, blank=False)
@@ -52,10 +25,25 @@ class Dog(models.Model):
 	dogcolor = models.CharField(max_length=1000, blank=False)
 	dogfood = models.CharField(max_length=1000, blank=False)
 	dogtoy = models.CharField(max_length=1000, blank=False)
+	eventtype = models.CharField(max_length=1000, blank=False)
+	timestamp = models.DateTimeField()
+	userid = models.CharField(max_length=1000, blank=True)
 	requestor = models.GenericIPAddressField(blank=False)
 
 	def __str__(self):
 		return str(self.dogname)
+
+class Breed(models.Model):
+	breedname = models.CharField(max_length=1000, blank=False)
+	breedsize = models.CharField(max_length=1000, blank=False)
+	friendliness = models.CharField(max_length=1000, blank=False)
+	trainability = models.CharField(max_length=1000, blank=False)
+	sheddingamount = models.CharField(max_length=1000, blank=False)
+	exerciseneeds = models.CharField(max_length=1000, blank=False)
+	requestor = models.GenericIPAddressField(blank=False)
+
+	def __str__(self):
+		return str(self.breedname)
 
 class User(models.Model):
 	username = models.CharField(max_length=1000, blank=False)
@@ -68,7 +56,7 @@ class User(models.Model):
 	state = models.CharField(max_length=1000, blank=False)
 
 	def __str__(self):
-		return str(self.username)
+		return str(self.eventtype)
 
 class Profile(models.Model):
 	username = models.CharField(max_length=1000, blank=False)
@@ -81,7 +69,7 @@ class Profile(models.Model):
 	state = models.CharField(max_length=1000, blank=False)
 
 	def __str__(self):
-		return str(self.username)
+		return str(self.eventtype)
 
 class Create_User(models.Model):
 	username = models.CharField(max_length=1000, blank=False)
@@ -94,7 +82,7 @@ class Create_User(models.Model):
 	state = models.CharField(max_length=1000, blank=False)
 
 	def __str__(self):
-		return str(self.username)
+		return str(self.eventtype)
 
 class EventAdmin(admin.ModelAdmin):
 	list_display = ('eventtype', 'timestamp')
