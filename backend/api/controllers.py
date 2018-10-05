@@ -1,8 +1,5 @@
-#from django.shortcuts import render
-from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
-from rest_framework import generics
-from rest_framework.permissions import IsAdminUser
+from django.shortcuts import render
+
 # Create your views here.
 from django.contrib.auth.models import *
 from django.contrib.auth import *
@@ -11,7 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
-#from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -42,6 +39,12 @@ from api.pagination import *
 import json, datetime, pytz
 from django.core import serializers
 import requests
+
+from api.models import Dog
+from api.models import Breed
+
+from api.serializers import BreedSerializer
+from api.serializers import DogSerializer
 
 def home(request):
    """
@@ -164,7 +167,7 @@ class Events(APIView):
 		print 'New Event Logged from: ' + requestor
 		return Response({'success': True}, status=status.HTTP_200_OK)
 
-class Dogs(APIView):
+class DogsList(APIView):
 	permission_classes = (AllowAny,)
 	parser_classes = (parsers.JSONParser,parsers.FormParser)
 	renderer_classes = (renderers.JSONRenderer, )
@@ -173,49 +176,52 @@ class Dogs(APIView):
 		doggy = Dog.objects.all()
 		json_data = serializers.serialize('json', doggy)
 		content = {'doggy': json_data}
-		return HttpResponse(json_data, content_type='json')
+		#return HttpResponse(json_data, content_type='json')
+		serializer = DogSerializer(doggy, many=True)
+		return Response(serializer.data)
 
 	def post(self, request, *args, **kwargs):
 		print 'REQUEST DATA'
 		print str(request.data)
-
-		dogname = request.data.get('dogname')
-		dogage = request.data.get('dogage')
-		dogbreed = request.data.get('dogbreed')
-		doggender = request.data.get('doggender')
-		dogcolor = request.data.get('dogcolor')
-		dogfood = request.data.get('dogfood')
-		dogtoy = request.data.get('dogtoy')
-		eventtype = request.data.get('eventtype')
-		timestamp = int(request.data.get('timestamp'))
-		userid = request.data.get('userid')
+		serializer = DogSerializer(data=request.data)
 		requestor = request.META['REMOTE_ADDR']
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-		newDog = Dog(
-			dogname=dogname,
-			dogage=dogage,
-			dogbreed=dogbreed,
-			doggender=doggender,
-			dogcolor=dogcolor,
-			dogfood=dogfood,
-			dogtoy=dogtoy,
-			eventtype=eventtype,
-			timestamp=datetime.datetime.fromtimestamp(timestamp/1000, pytz.utc),
-			userid=userid,
-			requestor=requestor
-		)
+class DogView(APIView):
+	permission_classes = (AllowAny,)
+	parser_classes = (parsers.JSONParser,parsers.FormParser)
+	renderer_classes = (renderers.JSONRenderer, )
 
+	def get_object(self, pk):
 		try:
-			newDog.clean_fields()
-		except ValidationError as f:
-			print f
-			return Response({'success':False, 'error':f}, status=status.HTTP_400_BAD_REQUEST)
+			return Dog.objects.get(pk=pk)
+		except Dog.DoesNotExist:
+			raise Http404
 
-		newDog.save()
-		print 'New Event Logged from: ' + requestor
-		return Response({'success': True}, status=status.HTTP_200_OK)
+	def get(self, request, pk, format=None):
+		dog = self.get_object(pk)
+		serializer = DogSerializer(dog)
+		return Response(serializer.data)
 
-class Breeds(APIView):
+	def put(self, request, pk, format=None):
+		dog = self.get_object(pk)
+		serializer = DogSerializer(dog, data=request.data)
+		requestor = request.META['REMOTE_ADDR']
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+	def delete(self, request, pk, format=None):
+		dog = self.get_object(pk)
+		dog.delete()
+		return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class BreedsList(APIView):
 	permission_classes = (AllowAny,)
 	parser_classes = (parsers.JSONParser,parsers.FormParser)
 	renderer_classes = (renderers.JSONRenderer, )
@@ -224,39 +230,48 @@ class Breeds(APIView):
 		breed = Breed.objects.all()
 		json_data = serializers.serialize('json', breed)
 		content = {'breed': json_data}
-		return HttpResponse(json_data, content_type='json')
+		serializer = BreedSerializer(breed, many=True)
+		return Response(serializer.data)
 
 	def post(self, request, *args, **kwargs):
 		print 'REQUEST DATA'
 		print str(request.data)
-
-		breedname = request.data.get('breedname')
-		breedsize = request.data.get('breedsize')
-		friendliness = request.data.get('friendliness')
-		trainability = request.data.get('trainability')
-		sheddingamount = request.data.get('sheddingamount')
-		exerciseneeds = request.data.get('exerciseneeds')
 		requestor = request.META['REMOTE_ADDR']
+		serializer = BreedSerializer(data=request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-		newBreed = Breed(
-			breedname=breedname,
-			breedsize=breedsize,
-			friendliness=friendliness,
-			trainability=trainability,
-			sheddingamount=sheddingamount,
-			exerciseneeds=exerciseneeds,
-			requestor=requestor
-		)
 
+class BreedView(APIView):
+	permission_classes = (AllowAny,)
+	parser_classes = (parsers.JSONParser,parsers.FormParser)
+	renderer_classes = (renderers.JSONRenderer, )
+	def get_object(self, pk):
 		try:
-			newBreed.clean_fields()
-		except ValidationError as f:
-			print f
-			return Response({'success':False, 'error':f}, status=status.HTTP_400_BAD_REQUEST)
+			return Breed.objects.get(pk=pk)
+		except Breed.DoesNotExist:
+			raise Http404
 
-		newBreed.save()
-		print 'New Event Logged from: ' + requestor
-		return Response({'success': True}, status=status.HTTP_200_OK)
+	def get(self, request, pk, format=None):
+		breed = self.get_object(pk)
+		serializer = BreedSerializer(breed)
+		return Response(serializer.data)
+
+	def put(self, request, pk, format=None):
+		breed = self.get_object(pk)
+		serializer = BreedSerializer(breed, data=request.data)
+		requestor = request.META['REMOTE_ADDR']
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+	def delete(self, request, pk, format=None):
+		breed = self.get_object(pk)
+		breed.delete()
+		return Response(status=status.HTTP_204_NO_CONTENT)
 
 class ActivateIFTTT(APIView):
 	permission_classes = (AllowAny,)

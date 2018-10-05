@@ -17,72 +17,47 @@ class Event(models.Model):
 	def __str__(self):
 		return str(self.eventtype)
 
-class Dog(models.Model):
-	dogname = models.CharField(max_length=1000, blank=False)
-	dogage = models.CharField(max_length=1000, blank=False)
-	dogbreed = models.CharField(max_length=1000, blank=False)
-	doggender = models.CharField(max_length=1000, blank=False)
-	dogcolor = models.CharField(max_length=1000, blank=False)
-	dogfood = models.CharField(max_length=1000, blank=False)
-	dogtoy = models.CharField(max_length=1000, blank=False)
-	eventtype = models.CharField(max_length=1000, blank=False)
-	timestamp = models.DateTimeField()
-	userid = models.CharField(max_length=1000, blank=True)
-	requestor = models.GenericIPAddressField(blank=False)
+BREEDDEFINE = (
+	('Tiny', 'Tiny'),
+	('Small', 'Small'),
+	('Medium', 'Medium'),
+	('Large', 'Large'),
+)
 
-	def __str__(self):
-		return str(self.dogname)
+BREEDRATE = (
+	(1, 1),
+	(2, 2),
+	(3, 3),
+	(4, 4),
+	(5, 5),
+)
 
 class Breed(models.Model):
 	breedname = models.CharField(max_length=1000, blank=False)
-	breedsize = models.CharField(max_length=1000, blank=False)
-	friendliness = models.CharField(max_length=1000, blank=False)
-	trainability = models.CharField(max_length=1000, blank=False)
-	sheddingamount = models.CharField(max_length=1000, blank=False)
-	exerciseneeds = models.CharField(max_length=1000, blank=False)
-	requestor = models.GenericIPAddressField(blank=False)
+	breedsize = models.CharField(max_length=1000, choices=BREEDDEFINE)
+	friendliness = models.IntegerField(choices=BREEDRATE)
+	trainability = models.IntegerField(choices=BREEDRATE)
+	sheddingamount = models.IntegerField(choices=BREEDRATE)
+	exerciseneeds = models.IntegerField(choices=BREEDRATE)
+	requestor = models.GenericIPAddressField(null=True, blank=False)
 
 	def __str__(self):
 		return str(self.breedname)
 
-class User(models.Model):
-	username = models.CharField(max_length=1000, blank=False)
-	age = models.DateTimeField()
-	password = models.CharField(max_length=1000, blank=False)
-	email = models.CharField(max_length=1000, blank=False)
-	gender = models.CharField(max_length=1000, blank=False)
-	educationlevel = models.CharField(max_length=1000, blank=False)
-	city = models.CharField(max_length=1000, blank=False)
-	state = models.CharField(max_length=1000, blank=False)
+
+class Dog(models.Model):
+	dogname = models.CharField(max_length=1000, blank=False)
+	dogage = models.IntegerField()
+	dogbreed = models.ForeignKey(Breed, on_delete=models.CASCADE)
+	doggender = models.CharField(max_length=1000, blank=False)
+	dogcolor = models.CharField(max_length=1000, blank=False)
+	dogfood = models.CharField(max_length=1000, blank=False)
+	dogtoy = models.CharField(max_length=1000, blank=False)
+	requestor = models.GenericIPAddressField(null=True, blank=False)
 
 	def __str__(self):
-		return str(self.eventtype)
+		return str(self.dogname)
 
-class Profile(models.Model):
-	username = models.CharField(max_length=1000, blank=False)
-	age = models.DateTimeField()
-	password = models.CharField(max_length=1000, blank=False)
-	email = models.CharField(max_length=1000, blank=False)
-	gender = models.CharField(max_length=1000, blank=False)
-	educationlevel = models.CharField(max_length=1000, blank=False)
-	city = models.CharField(max_length=1000, blank=False)
-	state = models.CharField(max_length=1000, blank=False)
-
-	def __str__(self):
-		return str(self.eventtype)
-
-class Create_User(models.Model):
-	username = models.CharField(max_length=1000, blank=False)
-	age = models.DateTimeField()
-	password = models.CharField(max_length=1000, blank=False)
-	email = models.CharField(max_length=1000, blank=False)
-	gender = models.CharField(max_length=1000, blank=False)
-	educationlevel = models.CharField(max_length=1000, blank=False)
-	city = models.CharField(max_length=1000, blank=False)
-	state = models.CharField(max_length=1000, blank=False)
-
-	def __str__(self):
-		return str(self.eventtype)
 
 class EventAdmin(admin.ModelAdmin):
 	list_display = ('eventtype', 'timestamp')
